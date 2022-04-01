@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Management\PermissionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -24,12 +25,22 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function (){
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::get('/users', function () {
-    return Inertia::render('User');
-})->middleware(['auth', 'verified'])->name('users');
+    Route::prefix('management')->group(function (){
+        Route::inertia('/', 'Management/Index')->name('management');
+        Route::resource('/permission', PermissionController::class);
+    });
+
+    Route::get('/users', function () {
+        return Inertia::render('User');
+    })->name('users');
+
+});
+
+
 
 require __DIR__.'/auth.php';

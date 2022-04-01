@@ -10,6 +10,9 @@
             <Link :href="route('dashboard')" class="flex items-center text-white py-4 pl-6 nav-item" :class="isUrl('dashboard') ? 'active-nav-link' : null">
             <i class="fas fa-tachometer-alt mr-3"></i>Dashboard
             </Link>
+            <Link :href="route('management')" class="flex items-center text-white py-4 pl-6 nav-item" :class="isUrl('dashboard') ? 'active-nav-link' : null">
+                <i class="fas fa-tachometer-alt mr-3"></i>Management
+            </Link>
             <Link :href="route('users')" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item" :class="isUrl('users') ? 'active-nav-link' : null">
             <i class="fas fa-sticky-note mr-3"></i>Users
             </Link>
