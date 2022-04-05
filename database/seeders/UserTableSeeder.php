@@ -37,12 +37,23 @@ class UserTableSeeder extends Seeder
         ]);
         $role->syncPermissions(Permission::all());
 
-        $admin = User::create([
+        $superAdmin = User::create([
+            'name' => 'superadmin',
+            'email' => 'superadmin@example.com',
+            'password' => bcrypt('password'),
+            'is_active' => true
+        ]);
+        $superAdmin->syncRoles($role->name);
+
+        $admin = Role::create(['name' => 'Admin']);
+        $admin->syncPermissions(Permission::whereIn('group', ['Role','Permission'])->pluck('id'));
+
+        $user = User::create([
             'name' => 'admin',
             'email' => 'admin@example.com',
             'password' => bcrypt('password'),
             'is_active' => true
         ]);
-        $admin->syncRoles($role->name);
+        $user->syncRoles($admin->name);
     }
 }
